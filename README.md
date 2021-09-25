@@ -23,7 +23,8 @@ const logger = new FileLogger({
     compressOnRotation: false,                   // Compress the file on rotation
     label: 'production',                         // A label that will be prepended to each log. You can use labels to distinguish different logger instances to the same file
     useUTC: true,                                // Use UTC for the timestamp in the logs, use local timezone otherwise
-    format: ({data, timestamp}) => `${timestamp} ${data.level}: ${data.message}` // The format of the log
+    format: ({data, timestamp}) => `${timestamp} ${data.level}: ${data.message}`, // The format of the log
+    useMoment: true                              // Use the momentjs library for timestamping; if useMoment === false, then useUTC will assume true. TODO: fix.
 });
 ```
 

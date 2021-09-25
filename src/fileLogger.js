@@ -9,9 +9,10 @@ export default class FileLogger {
         this.logRotatePattern = params.logRotatePattern || "YYYY-MM-DD";
         this.filename = params.filename;
         this.symLinkName = params.symLink;
-        this.useUTC = params.useUTC;
         this.directory = params.directory;
         this.levels = params.levels || ['error', 'info', 'verbose'];
+        this.useMoment = params.useMoment || true;
+        this.useUTC = !this.useMoment || params.useUTC;
 
         // File rotation
         this.compressOnRotation = params.compressOnRotation;
@@ -73,7 +74,7 @@ export default class FileLogger {
     log = (data) => {
         try {
             const item = this.format({
-                timestamp: this.getCurrentDate().format('YYYY-MM-DDTHH:mm:ssZ'),
+                timestamp: this.useMoment ? this.getCurrentDate().format('YYYY-MM-DDTHH:mm:ssZ') : new Date(),
                 data
             });
             this.stream.write(item + "\n");
